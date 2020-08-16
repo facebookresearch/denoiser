@@ -1,0 +1,13 @@
+.DS_Store
+*.pyc
+egs/
+.nfs*
+outputs/
+enhanced/
+.vim
+models/
+private/
+dist
+build
+*.egg-info
+*.th

@@ -1,0 +1,7 @@
+include *.md
+include LICENSE
+include *.sh
+include setup.cfg
+include *.txt
+include demucs.png
+recursive-include conf *.yaml
