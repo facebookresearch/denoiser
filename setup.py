@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the license found in the
 # LICENSE file in the root directory of this source tree.
+# author: adefossez
 # Inspired from https://github.com/kennethreitz/setup.py
 
 from pathlib import Path
@@ -21,7 +22,7 @@ URL = 'https://github.com/facebookresearch/denoiser'
 EMAIL = 'alexandre.defossez@gmail.com'
 AUTHOR = 'Alexandre Défossez'
 REQUIRES_PYTHON = '>=3.7.0'
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 HERE = Path(__file__).parent
 

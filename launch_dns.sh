@@ -1,7 +1,12 @@
 #!/bin/bash
+# Copyright (c) Facebook, Inc. and its affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+# authors: adiyoss and adefossez
 
-srun --gres gpu:8 --mem 500G --nodes 1 -n 1 --cpus-per-task 40 --partition dev --time 72:00:00 \
-  python train.py \
+python train.py \
   dset=dns \
   demucs.causal=1 \
   demucs.hidden=64 \
