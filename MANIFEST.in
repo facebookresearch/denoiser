@@ -1,7 +1,7 @@
 include *.md
 include LICENSE
-include *.sh
 include setup.cfg
+incude img/demucs.png
 include *.txt
-include demucs.png
+include train.py
 recursive-include conf *.yaml

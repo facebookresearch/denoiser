@@ -13,7 +13,7 @@ from .demucs import Demucs
 from .utils import deserialize_model
 
 logger = logging.getLogger(__name__)
-ROOT = "s3://dl.fbaipublicfiles.com/adiyoss/denoiser/"
+ROOT = "https://dl.fbaipublicfiles.com/adiyoss/denoiser/"
 DNS_48_URL = ROOT + "dns48-11decc9d8e3f0998.th"
 DNS_64_URL = ROOT + "dns64-a7761ff99a7d5bb6.th"
 MASTER_64_URL = ROOT + "master64-8a5dfb4bb92753dd.th"

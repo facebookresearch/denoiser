@@ -1,0 +1,168 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./github-markdown.css">
+  <style>
+  body {
+    background-color: #fbfbfb;
+    margin: 0;
+  }
+  .markdown-body {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 45px;
+    overflow-x:scroll;
+    max-width:900px;
+    background-color: #f6f6f6;
+    font-family: sans-serif !important;
+  }
+
+  audio {
+    width:270px;
+  }
+
+  p {
+    text-align:justify;
+  }
+
+  .samples {
+      padding-top: 1em;
+      padding-bottom: 1em;
+  }
+
+  .sample span {
+    display: block;
+    padding-right:10px;
+  }
+
+  .sample audio {
+    display: block;
+  }
+
+  .sample {
+      display:flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-bottom:0.5em;
+  }
+
+  .sample span:nth-of-type(even) {
+    padding-left:15px;
+  }
+  .lang>.sample span:nth-of-type(odd) {
+    width:130px;
+  }
+  </style>
+  <title>Real Time Speech Enhancement in the Waveform Domain</title>
+</head>
+
+<body>
+  <section class="markdown-body">
+    <h1>Real Time Speech Enhancement in the Waveform Domain</h1>
+    <p>We present here audio samples for the causal Demucs model trained on the
+      <a href="https://github.com/microsoft/DNS-Challenge">DNS challenge dataset</a> as presented
+      in the paper <a href="https://arxiv.org/abs/2006.12847">Real Time Speech Enhancement in the Waveform Domain</a>. 
+      We used the
+      causal Demucs with H=64, Revecho augmentation with partial dereverberation
+      (10% of reverb kept), and adding back 1% of the dry signal.
+    </p>
+    <p>We used a specific causal implementation for evaluation, which feed to model
+    with audio frames of 40ms, strided by 16ms. The model outputs a prediction for 
+    the left-most 16ms of the input frame. On a quad-core Intel i7-8565U CPU 
+    (2.0 GHz, up to AVX2 instruction set), it takes just about 16ms to evaluate,
+    allowing for real time speech enhancement on laptop. The model weights 135MB,
+    with future work planned on quantization.
+    </p>
+
+    <h2>Real life samples</h2>
+    The following samples are taken from the authors daily life, in real noisy conditions.
+    We feature different languages than English to test how well the model adapts.
+
+
+    <section class="samples lang">
+      <article class="sample">
+        <span>Noisy (French): </span>
+          <audio controls>
+              <source src="audio/noisy/alex_noisy.mp3" type="audio/mp3"></audio>
+          <span>Enhanced: </span>
+          <audio controls>
+              <source src="audio/enhanced/alex_noisy.mp3" type="audio/mp3"></audio>
+      </article><article class="sample">
+        <span>Noisy (Hebrew): </span>
+        <audio controls>
+            <source src="audio/noisy/heb_1.mp3" type="audio/mp3"></audio>
+        <span>Enhanced: </span>
+        <audio controls>
+            <source src="audio/enhanced/heb_1.mp3" type="audio/mp3"></audio>
+      </article><article class="sample">
+        <span>Noisy (Hebrew): </span>
+        <audio controls>
+            <source src="audio/noisy/heb_3.mp3" type="audio/mp3"></audio>
+        <span>Enhanced: </span>
+        <audio controls>
+            <source src="audio/enhanced/heb_3.mp3" type="audio/mp3"></audio>
+      </article><article class="sample">
+        <span>Noisy (French): </span>
+        <audio controls>
+            <source src="audio/noisy/sarah_flute.mp3" type="audio/mp3"></audio>
+        <span>Enhanced: </span>
+        <audio controls>
+            <source src="audio/enhanced/sarah_flute.mp3" type="audio/mp3"></audio>
+    </article></section>
+
+
+    <h2>Samples from the blind test set of the DNS dataset</h2>
+    The following samples are taken from the blind test set of the DNS challenge
+        dataset.
+
+    <h4>Category "reverb"</h4>
+    <p>The following samples are artificial mixtures with reverb added,
+    from the DNS blind test set.</p>
+    <section class="samples">
+      <article class="sample">
+        <span>Noisy: </span>
+        <audio controls>
+            <source src="audio/noisy/reverb_fileid_2.mp3" type="audio/mp3"></audio>
+        <span>Enhanced: </span>
+        <audio controls>
+            <source src="audio/enhanced/reverb_fileid_2.mp3" type="audio/mp3"></audio>
+      </article><article class="sample">
+        <span>Noisy: </span>
+        <audio controls>
+            <source src="audio/noisy/reverb_fileid_138.mp3" type="audio/mp3"></audio>
+        <span>Enhanced: </span>
+        <audio controls>
+            <source src="audio/enhanced/reverb_fileid_138.mp3" type="audio/mp3"></audio></div>
+      </article>
+    </section>
+    <h4>Category "real rec"</h4>
+    <p>The following samples are real recordings from the DNS blind test set.</p>
+    <section class="samples">
+      <article class="sample">
+        <span>Noisy: </span>
+        <audio controls>
+            <source src="audio/noisy/realrec_fileid_260.mp3" type="audio/mp3"></audio>
+        <span>Enhanced: </span>
+        <audio controls>
+            <source src="audio/enhanced/realrec_fileid_260.mp3" type="audio/mp3"></audio></div><div class="samples">
+      </article><article class="sample">
+        <span>Noisy: </span>
+        <audio controls>
+            <source src="audio/noisy/realrec_fileid_73.mp3" type="audio/mp3"></audio>
+        <span>Enhanced: </span>
+        <audio controls>
+            <source src="audio/enhanced/realrec_fileid_73.mp3" type="audio/mp3"></audio></div><div class="samples">
+      </article><article class="sample">
+        <span>Noisy: </span>
+        <audio controls>
+            <source src="audio/noisy/realrec_fileid_270.mp3" type="audio/mp3"></audio>
+        <span>Enhanced: </span>
+        <audio controls>
+            <source src="audio/enhanced/realrec_fileid_270.mp3" type="audio/mp3"></audio>
+      </article>
+    </section>
+  </section>
+</body>
+
+</html>

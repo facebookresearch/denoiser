@@ -3,7 +3,6 @@
 egs/
 .nfs*
 outputs/
-enhanced/
 .vim
 models/
 private/
