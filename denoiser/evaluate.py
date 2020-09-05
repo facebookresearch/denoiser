@@ -16,26 +16,11 @@ from pystoi import stoi
 import torch
 
 from .data import NoisyCleanSet
-from .demucs import DemucsStreamer
+from .enhance import add_flags, get_estimate
 from . import distrib, pretrained
 from .utils import bold, LogProgress
 
 logger = logging.getLogger(__name__)
-
-
-def add_flags(parser):
-    """
-    Add the flags for the argument parser that are related to model loading and evaluation"
-    """
-    pretrained.add_model_flags(parser)
-    parser.add_argument('--device', default="cpu")
-    parser.add_argument('--dry', type=float, default=0,
-                        help='dry/wet knob coefficient. 0 is only input signal, 1 only denoised.')
-    parser.add_argument('--sample_rate', default=16_000, type=int, help='sample rate')
-    parser.add_argument('--num_workers', type=int, default=10)
-    parser.add_argument('--streaming', action="store_true",
-                        help="true streaming evaluation for Demucs")
-
 
 parser = argparse.ArgumentParser(
         'denoiser.evaluate',
@@ -92,21 +77,6 @@ def evaluate(args, model=None, data_loader=None):
     pesq, stoi = distrib.average([m/total_cnt for m in metrics], total_cnt)
     logger.info(bold(f'Test set performance:PESQ={pesq}, STOI={stoi}.'))
     return pesq, stoi
-
-
-def get_estimate(model, noisy, args):
-    torch.set_num_threads(1)
-    if args.streaming:
-        streamer = DemucsStreamer(model, dry=args.dry)
-        with torch.no_grad():
-            estimate = torch.cat([
-                streamer.feed(noisy[0]),
-                streamer.flush()], dim=1)[None]
-    else:
-        with torch.no_grad():
-            estimate = model(noisy)
-            estimate = (1 - args.dry) * estimate + args.dry * noisy
-    return estimate
 
 
 def _estimate_and_run_metrics(clean, model, noisy, args):

@@ -16,10 +16,25 @@ import torchaudio
 
 from .audio import Audioset, find_audio_files
 from . import distrib, pretrained
-from .evaluate import add_flags, get_estimate
+from .demucs import DemucsStreamer
 
 from .utils import LogProgress
+
 logger = logging.getLogger(__name__)
+
+
+def add_flags(parser):
+    """
+    Add the flags for the argument parser that are related to model loading and evaluation"
+    """
+    pretrained.add_model_flags(parser)
+    parser.add_argument('--device', default="cpu")
+    parser.add_argument('--dry', type=float, default=0,
+                        help='dry/wet knob coefficient. 0 is only input signal, 1 only denoised.')
+    parser.add_argument('--sample_rate', default=16_000, type=int, help='sample rate')
+    parser.add_argument('--num_workers', type=int, default=10)
+    parser.add_argument('--streaming', action="store_true",
+                        help="true streaming evaluation for Demucs")
 
 
 parser = argparse.ArgumentParser(
@@ -37,6 +52,21 @@ group.add_argument("--noisy_dir", type=str, default=None,
                    help="directory including noisy wav files")
 group.add_argument("--noisy_json", type=str, default=None,
                    help="json file including noisy wav files")
+
+
+def get_estimate(model, noisy, args):
+    torch.set_num_threads(1)
+    if args.streaming:
+        streamer = DemucsStreamer(model, dry=args.dry)
+        with torch.no_grad():
+            estimate = torch.cat([
+                streamer.feed(noisy[0]),
+                streamer.flush()], dim=1)[None]
+    else:
+        with torch.no_grad():
+            estimate = model(noisy)
+            estimate = (1 - args.dry) * estimate + args.dry * noisy
+    return estimate
 
 
 def save_wavs(estimates, noisy_sigs, filenames, out_dir, sr=16_000):
