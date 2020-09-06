@@ -224,6 +224,8 @@ class DemucsStreamer:
         - dry (float): amount of dry (e.g. input) signal to keep. 0 is maximum
             noise removal, 1 just returns the input signal. Small values > 0
             allows to limit distortions.
+        - num_frames (int): number of frames to process at once. Higher values
+            will increase overall latency but improve the real time factor.
         - resample_lookahead (int): extra lookahead used for the resampling.
         - resample_buffer (int): size of the buffer of previous inputs/outputs
             kept for resampling.
