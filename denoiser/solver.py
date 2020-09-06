@@ -14,8 +14,7 @@ import time
 import torch
 import torch.nn.functional as F
 
-from . import distrib
-from . import augment
+from . import augment, distrib, pretrained
 from .enhance import enhance
 from .evaluate import evaluate
 from .stft_loss import MultiResolutionSTFTLoss
@@ -115,6 +114,11 @@ class Solver(object):
             if keep_history:
                 self.history = package['history']
             self.best_state = package['best_state']
+        continue_pretrained = self.args.continue_pretrained
+        if continue_pretrained:
+            logger.info("Fine tuning from pre-trained model %s", continue_pretrained)
+            model = getattr(pretrained, self.args.continue_pretrained)()
+            self.model.load_state_dict(model.state_dict())
 
     def train(self):
         # Optimizing the model

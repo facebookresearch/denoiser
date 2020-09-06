@@ -29,6 +29,7 @@ continue_from: '' # Path the a checkpoint.th file to start from.
                   # this is not used in the name of the experiment!
                   # so use a dummy=something not to mixup experiments.
 continue_best: false  # continue from best, not last state if continue_from is set.
+continue_pretrained:   # use either dns48, dns64 or master64 to fine tune from pretrained-model
 restart: false # Ignore existing checkpoints
 checkpoint_file: checkpoint.th
 best_file: best.th  # will contain only best model at any point
