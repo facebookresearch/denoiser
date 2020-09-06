@@ -43,7 +43,14 @@ def get_parser():
         "--dry", type=float, default=0.04,
         help="Dry/wet knob, between 0 and 1. 0=maximum noise removal "
              "but it might cause distortions. Default is 0.04")
-    parser.add_argument("-t", "--num_threads", type=int)
+    parser.add_argument(
+        "-t", "--num_threads", type=int,
+        help="Number of threads. If you have DDR3 RAM, setting -t 1 can "
+             "improve performance.")
+    parser.add_argument(
+        "-f", "--num_frames", type=int, default=1,
+        help="Number of frames to process at once. Larger values increase "
+             "the overall lag, but will improve speed.")
     return parser
 
 
@@ -80,7 +87,7 @@ def main():
     model = get_model(args).to(args.device)
     model.eval()
     print("Model loaded.")
-    streamer = DemucsStreamer(model, dry=args.dry)
+    streamer = DemucsStreamer(model, dry=args.dry, num_frames=args.num_frames)
 
     device_in = parse_audio_device(args.in_)
     caps = query_devices(device_in, "input")
@@ -98,23 +105,36 @@ def main():
         samplerate=args.sample_rate,
         channels=channels_out)
 
-    first = True
     stream_in.start()
     stream_out.start()
-    print("Ready to process audio.")
-    cooldown = 0
-    index = 0
+    first = True
+    current_time = 0
+    last_log_time = 0
+    last_error_time = 0
+    cooldown_time = 2
+    log_delta = 10
+    sr_ms = args.sample_rate / 1000
+    stride_ms = streamer.stride / sr_ms
+    print(f"Ready to process audio, total lag: {streamer.total_length / sr_ms:.1f}ms.")
     while True:
         try:
-            index += 1
-            if index % 100 == 0:
+            if current_time > last_log_time + log_delta:
+                last_log_time = current_time
+                tpf = streamer.time_per_frame * 1000
+                rtf = tpf / stride_ms
+                print(f"time per frame: {tpf:.1f}ms, ", end='')
+                print(f"RTF: {rtf:.1f}")
                 streamer.reset_time_per_frame()
-            length = streamer.total_length if first else streamer.demucs.total_stride
+
+            length = streamer.total_length if first else streamer.stride
             first = False
+            current_time += length / args.sample_rate
             frame, overflow = stream_in.read(length)
             frame = torch.from_numpy(frame).mean(dim=1).to(args.device)
             with torch.no_grad():
                 out = streamer.feed(frame[None])[0]
+            if not out.numel():
+                continue
             if args.compressor:
                 out = 0.99 * torch.tanh(out)
             out = out[:, None].repeat(1, channels_out)
@@ -125,12 +145,11 @@ def main():
             out = out.cpu().numpy()
             underflow = stream_out.write(out)
             if overflow or underflow:
-                if cooldown == 0:
-                    cooldown = 10
+                if current_time >= last_error_time + cooldown_time:
+                    last_error_time = current_time
                     tpf = 1000 * streamer.time_per_frame
-                    print(f"Not processing audio fast enough, time per frame is {tpf:.1f}ms !")
-                else:
-                    cooldown -= 1
+                    print(f"Not processing audio fast enough, time per frame is {tpf:.1f}ms "
+                          f"(should be less than {stride_ms:.1f}ms).")
         except KeyboardInterrupt:
             print("Stopping")
             break

@@ -22,7 +22,7 @@ URL = 'https://github.com/facebookresearch/denoiser'
 EMAIL = 'alexandre.defossez@gmail.com'
 AUTHOR = 'Alexandre Défossez'
 REQUIRES_PYTHON = '>=3.7.0'
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 
 HERE = Path(__file__).parent
 
@@ -38,7 +38,7 @@ REQUIRED = [
 ]
 
 REQUIRED_LINKS = [
-    "git+ssh://git@github.com/ludlows/python-pesq@master#egg=pesq",
+    "git+https://github.com/ludlows/python-pesq#egg=pesq",
 ]
 
 try:
