@@ -359,7 +359,7 @@ This repository is released under the CC-BY-NC 4.0. license as found in the [LIC
 The file `denoiser/stft_loss.py` is adapted from the [kan-bayashi/ParallelWaveGAN][wavegan] repository. It is an unofficial implementation of the [ParallelWaveGAN][wavegan-paper] paper, released under the MIT License.
 
 [arxiv]: https://arxiv.org/abs/2006.12847
-[web]: https://ai.honu.io/is2020/samples.html
+[web]: https://facebookresearch.github.io/denoiser/
 [pytorch]: https://pytorch.org/
 [valentini]: https://datashare.is.ed.ac.uk/handle/10283/2791
 [dns]: https://github.com/microsoft/DNS-Challenge
