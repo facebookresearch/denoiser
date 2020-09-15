@@ -56,6 +56,8 @@ python -m denoiser.live
 In your favorite video conference call application, just select "Soundflower (2ch)"
 as input to enjoy your denoised speech.
 
+Watch our live demo presentation in the following link: [Demo][demo].
+
 ### Other platforms
 
 At the moment, we do not provide official support for other OSes. However, if you
@@ -370,3 +372,4 @@ The file `denoiser/stft_loss.py` is adapted from the [kan-bayashi/ParallelWaveGA
 [wavegan-paper]: https://arxiv.org/pdf/1910.11480.pdf
 [demucs-code]: https://github.com/facebookresearch/demucs
 [demucs-ppr]: https://hal.archives-ouvertes.fr/hal-02379796/document
+[demo]: https://www.youtube.com/watch?v=77cm_MVtLfk
