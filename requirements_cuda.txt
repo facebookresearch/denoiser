@@ -1,9 +1,0 @@
-hydra_core==0.11.3
-hydra_colorlog==0.1.4
-numpy==1.19.0
-pystoi==0.3.3
-git+ssh://git@github.com/ludlows/python-pesq@master#egg=pesq
-six
-sounddevice==0.4.0
-torchaudio==0.5.1
-torch==1.5.1+cu101
