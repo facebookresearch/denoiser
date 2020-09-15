@@ -358,7 +358,8 @@ If you use the code in your paper, then please cite it as:
 ## License
 This repository is released under the CC-BY-NC 4.0. license as found in the [LICENSE](LICENSE) file.
 
-The file `denoiser/stft_loss.py` is adapted from the [kan-bayashi/ParallelWaveGAN][wavegan] repository. It is an unofficial implementation of the [ParallelWaveGAN][wavegan-paper] paper, released under the MIT License.
+The file `denoiser/stft_loss.py` was adapted from the [kan-bayashi/ParallelWaveGAN][wavegan] repository. It is an unofficial implementation of the [ParallelWaveGAN][wavegan-paper] paper, released under the MIT License.
+The file `scripts/matlab_eval.py` was adapted from the [santi-pdp/segan_pytorch][segan] repository. It is an unofficial implementation of the [SEGAN][segan-paper] paper, released under the MIT License.
 
 [arxiv]: https://arxiv.org/abs/2006.12847
 [web]: https://facebookresearch.github.io/denoiser/
@@ -369,7 +370,9 @@ The file `denoiser/stft_loss.py` is adapted from the [kan-bayashi/ParallelWaveGA
 [hydra-web]: https://hydra.cc/
 [soundflower]: https://github.com/mattingalls/Soundflower
 [wavegan]: https://github.com/kan-bayashi/ParallelWaveGAN
+[segan]: https://github.com/santi-pdp/segan_pytorch
 [wavegan-paper]: https://arxiv.org/pdf/1910.11480.pdf
+[segan-paper]: https://arxiv.org/pdf/1703.09452.pdf
 [demucs-code]: https://github.com/facebookresearch/demucs
 [demucs-ppr]: https://hal.archives-ouvertes.fr/hal-02379796/document
 [demo]: https://www.youtube.com/watch?v=77cm_MVtLfk
