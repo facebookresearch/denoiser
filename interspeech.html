@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Real Time Speech Enhancement in the Waveform Domain</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="src/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="src/css/scrolling-nav.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <!--<a class="navbar-brand js-scroll-trigger" href="#page-top">Drums & Tech</a>-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#abs">Abstract</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#code">Code</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#pres">Presentation</a>
+            </li>        
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#demo">Live Demo</a>
+            </li>        
+            <!-- <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-dark text-white">
+      <div class="container text-center">
+        <h1>Real Time Speech Enhancement in the Waveform Domain</h1>
+      </div>
+    </header>
+
+    <br></br>
+
+    <section id="abs">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-15 mx-auto">
+            <!--<h2>Course Details</h2>-->
+            <p class="lead" align="justify">
+            <h3>Abstract</h3>
+            We present a causal speech enhancement model working on the raw waveform that runs in real-time on a laptop CPU. The proposed model is based on an encoder-decoder architecture with skip-connections. It is optimized on both time and frequency domains, using multiple loss functions. Empirical evidence shows that it is capable of removing various kinds of background noise including stationary and non-stationary noises, as well as room reverb. Additionally, we suggest a set of data augmentation techniques applied directly on the raw waveform which further improve model performance and its generalization abilities. We perform evaluations on several standard benchmarks, both using objective metrics and human judgments. The proposed model matches state-of-the-art performance of both causal and non causal methods while working directly on the raw waveform            
+    </section>
+
+    <section id="code" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-13 mx-auto">
+          	<center><h3>Code</h3></center>
+            <p class="lead" align="justify">
+                All relevant code for training and evaluation together with pre-trained models can be find under the following link: <a href="https://github.com/facebookresearch/denoiser" target="_blank">github.com/facebookresearch/denoiser</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>    
+	
+    <section id="pres" class="bg-white">
+      <center><h3>Conference Presentation</h3></center>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-13 mx-auto">
+          	<p>
+          		Here we provide the conference presentation of our work presented by Alexandre Defossez at Interspeech 2020:
+          	</p>
+
+            <div class="sizer">
+              <div class="embed-responsive embed-responsive-16by9">
+                <video src="src/media/pres.mp4" autoplay controls></video>
+              </div>
+            </div>
+
+          	<!-- <center>
+	            <video controls="controls" src="src/media/pres.mp4">
+				      </video>
+			       </center> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="bg-light">
+      <center><h3>Live Demo</h3></center>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-13 mx-auto">
+          	<p>     
+          		Lastly, we provide a live demo of the proposed speech enhancement model. Denoising was done live on a Mac book pro with an Intel i5 quad-core CPU at 2GHz. We use Soundflower to intercept and clean the audio before sending it to the Zoom app.
+          	</p>          	
+			<div class="row">
+				<div class="col-lg-13 mx-auto">					
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/77cm_MVtLfk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>				 
+			  	</div>
+			</div>          	
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <!-- <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p> -->
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="src/vendor/jquery/jquery.min.js"></script>
+    <script src="src/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="src/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="src/js/scrolling-nav.js"></script>
+
+  </body>
+</html>
