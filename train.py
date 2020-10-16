@@ -55,8 +55,11 @@ def run(args):
         cv_loader = distrib.loader(cv_dataset, batch_size=1, num_workers=args.num_workers)
     else:
         cv_loader = None
-    tt_dataset = NoisyCleanSet(args.dset.test, **kwargs)
-    tt_loader = distrib.loader(tt_dataset, batch_size=1, num_workers=args.num_workers)
+    if args.dset.test:
+        tt_dataset = NoisyCleanSet(args.dset.test, **kwargs)
+        tt_loader = distrib.loader(tt_dataset, batch_size=1, num_workers=args.num_workers)
+    else:
+        tt_loader = None
     data = {"tr_loader": tr_loader, "cv_loader": cv_loader, "tt_loader": tt_loader}
 
     # torch also initialize cuda seed if available
@@ -77,10 +80,12 @@ def run(args):
 
 
 def _main(args):
+    global __file__
     # Updating paths in config
     for key, value in args.dset.items():
         if isinstance(value, str) and key not in ["matching"]:
             args.dset[key] = hydra.utils.to_absolute_path(value)
+    __file__ = hydra.utils.to_absolute_path(__file__)
     if args.verbose:
         logger.setLevel(logging.DEBUG)
         logging.getLogger("denoise").setLevel(logging.DEBUG)

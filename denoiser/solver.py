@@ -161,7 +161,7 @@ class Solver(object):
 
             # evaluate and enhance samples every 'eval_every' argument number of epochs
             # also evaluate on last epoch
-            if (epoch + 1) % self.eval_every == 0 or epoch == self.epochs - 1:
+            if (epoch + 1) % self.eval_every == 0 or epoch == self.epochs - 1 and self.tt_loader:
                 # Evaluate on the testset
                 logger.info('-' * 70)
                 logger.info('Evaluating on the test set...')
