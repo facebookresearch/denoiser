@@ -1,5 +1,7 @@
 # Real Time Speech Enhancement in the Waveform Domain (Interspeech 2020)
 
+![tests badge](https://github.com/adefossez/prioheap/workflows/tests/badge.svg)
+
 We provide a [PyTorch][pytorch] implementation of the paper: [Real Time Speech Enhancement in the Waveform Domain][arxiv].
 In which, we present a causal speech enhancement model working on the raw waveform that runs in real-time on a laptop CPU.
 The proposed model is based on an encoder-decoder architecture with skip-connections. It is optimized on both time and frequency domains, using multiple loss functions.
