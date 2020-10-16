@@ -26,4 +26,4 @@ jobs:
     - name: Dummy training
       run: |
         ./make_debug.sh
-        python train.py device=cpu epochs=1 eval_every=1 demucs.hidden=1 demucs.depth=3
+        python train.py device=cpu epochs=1 eval_every=2 demucs.hidden=1 demucs.depth=3
