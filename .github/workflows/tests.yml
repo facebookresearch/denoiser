@@ -1,0 +1,30 @@
+name: tests
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - run: python my_script.py
+      
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Demucs benchmark
+      run: |
+        python -m denoiser.demucs
+        
+    - name: Dummy training
+      run: |
+        ./make_debug.sh
+        python train.py device=cpu epochs=1 eval_every=1 demucs.hidden=1 demucs.depth=3
