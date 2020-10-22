@@ -81,7 +81,12 @@ Audio can become crunchy if your computer is not fast enough to process audio in
 In that case, you will see an error message in your terminal warning you that `denoiser`
 is not processing audio fast enough. You can try exiting all non required applications.
 
-`denoiser` was tested on a Mac Book Pro with an 2GHz quadcore Intel i5.
+`denoiser` was tested on a Mac Book Pro with an 2GHz quadcore Intel i5 with DDR4 memory.
+You might experience issues with DDR3 memory. In that case you can trade overall latency for speed by processing multiple frames at once. To do so, run
+```
+python -m denoiser.live -f 2
+```
+You can increase to `-f 3` or more if needed, but each increase will add 16ms of extra latency.
 
 
 ### Denoising received speech
@@ -180,6 +185,15 @@ In the experiment folder you will find the `best.th` serialized model, the train
 and well as the log with the metrics `trainer.log`. All metrics are also extracted to the `history.json`
 file for easier parsing. Enhancements samples are stored in the `samples` folder (if `noisy_dir` or `noisy_json`
 is set in the dataset).
+
+#### Fine tuning
+
+You can fine-tune one of the 3 pre-trained models `dns48`, `dns64` and `master64`. To do so:
+```
+./train.py continue_pretrained=dns48
+./train.py continue_pretrained=dns64 demucs.hidden=64
+./train.py continue_pretrained=master64 demucs.hidden=64
+```
 
 ### 3. Evaluating
 
