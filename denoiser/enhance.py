@@ -56,6 +56,9 @@ group.add_argument("--noisy_json", type=str, default=None,
 
 def get_estimate(model, noisy, args):
     torch.set_num_threads(1)
+    device = next(iter(model.parameters())).device
+
+    noisy = noisy.to(device)
     if args.streaming:
         streamer = DemucsStreamer(model, dry=args.dry)
         with torch.no_grad():
@@ -105,6 +108,9 @@ def enhance(args, model=None, local_out_dir=None):
     # Load model
     if not model:
         model = pretrained.get_model(args).to(args.device)
+    if torch.cuda.is_available():
+        model = model.cuda()
+
     model.eval()
     if local_out_dir:
         out_dir = local_out_dir
