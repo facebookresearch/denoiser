@@ -11,14 +11,13 @@ import os
 
 import hydra
 
+
 from denoiser.executor import start_ddp_workers
 
 logger = logging.getLogger(__name__)
 
-
 def run(args):
     import torch
-
     from denoiser import distrib
     from denoiser.data import NoisyCleanSet
     from denoiser.demucs import Demucs
@@ -26,7 +25,7 @@ def run(args):
     distrib.init(args)
 
     model = Demucs(**args.demucs)
-
+    
     if args.show:
         logger.info(model)
         mb = sum(p.numel() for p in model.parameters()) * 4 / 2**20
@@ -53,9 +52,9 @@ def run(args):
     if args.dset.valid:
         cv_dataset = NoisyCleanSet(args.dset.valid, **kwargs)
         cv_loader = distrib.loader(cv_dataset, batch_size=1, num_workers=args.num_workers)
-    else:
+     else:
         cv_loader = None
-    if args.dset.test:
+   if args.dset.test:
         tt_dataset = NoisyCleanSet(args.dset.test, **kwargs)
         tt_loader = distrib.loader(tt_dataset, batch_size=1, num_workers=args.num_workers)
     else:
