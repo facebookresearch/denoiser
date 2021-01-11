@@ -6,6 +6,7 @@
 # author: adiyoss
 
 import argparse
+from concurrent.futures import ProcessPoolExecutor
 import json
 import logging
 import os
@@ -101,6 +102,11 @@ def get_dataset(args):
     return Audioset(files, with_path=True, sample_rate=args.sample_rate)
 
 
+def _estimate_and_save(model, noisy_signals, filenames, out_dir, args):
+    estimate = get_estimate(model, noisy_signals, args)
+    save_wavs(estimate, noisy_signals, filenames, out_dir, sr=args.sample_rate)
+
+
 def enhance(args, model=None, local_out_dir=None):
     # Load model
     if not model:
@@ -120,15 +126,26 @@ def enhance(args, model=None, local_out_dir=None):
         os.makedirs(out_dir, exist_ok=True)
     distrib.barrier()
 
-    with torch.no_grad():
+    with ProcessPoolExecutor(args.num_workers) as pool:
         iterator = LogProgress(logger, loader, name="Generate enhanced files")
+        pendings = []
         for data in iterator:
             # Get batch data
             noisy_signals, filenames = data
             noisy_signals = noisy_signals.to(args.device)
-            # Forward
-            estimate = get_estimate(model, noisy_signals, args)
-            save_wavs(estimate, noisy_signals, filenames, out_dir, sr=args.sample_rate)
+            if args.device == 'cpu' and args.num_workers > 1:
+                pendings.append(
+                    pool.submit(_estimate_and_save,
+                                model, noisy_signals, filenames, out_dir, args))
+            else:
+                # Forward
+                estimate = get_estimate(model, noisy_signals, args)
+                save_wavs(estimate, noisy_signals, filenames, out_dir, sr=args.sample_rate)
+
+        if pendings:
+            print('Waiting for pending jobs...')
+            for pending in LogProgress(logger, pendings, updates=5, name="Generate enhanced files"):
+                pending.result()
 
 
 if __name__ == "__main__":
