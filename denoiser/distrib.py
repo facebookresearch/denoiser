@@ -43,7 +43,7 @@ def average(metrics, count=1.):
     """average.
 
     Average all the relevant metrices across processes
-    `metrics`should be a 1D float32 fector. Returns the average of `metrics`
+    `metrics`should be a 1D float32 vector. Returns the average of `metrics`
     over all hosts. You can use `count` to control the weight of each worker.
     """
     if world_size == 1:
