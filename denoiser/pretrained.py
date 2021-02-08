@@ -57,7 +57,12 @@ def get_model(args):
     if args.model_path:
         logger.info("Loading model from %s", args.model_path)
         pkg = torch.load(args.model_path)
-        model = deserialize_model(pkg)
+        if 'model' in pkg:
+            if 'best_state' in pkg:
+                pkg['model']['state'] = pkg['best_state']
+            model = deserialize_model(pkg['model'])
+        else:
+            model = deserialize_model(pkg)
     elif args.dns64:
         logger.info("Loading pre-trained real time H=64 model trained on DNS.")
         model = dns64()
