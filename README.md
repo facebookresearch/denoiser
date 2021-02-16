@@ -332,8 +332,8 @@ python -m denoiser.audio $noisy egs/dns/tr/noisy.json
 python -m denoiser.audio $clean egs/dns/tr/clean.json
 
 mkdir -p egs/dns/tt
-python -m denoiser.audio $testset/synthetic/no_reverb/noisy $testset/synthetic/reverb/noisy > egs/dns/tt/noisy.json
-python -m denoiser.audio $testset/synthetic/no_reverb/clean $testset/synthetic/reverb/clean > egs/dns/tt/clean.json
+python -m denoiser.audio $testset/synthetic/no_reverb/noisy $testset/synthetic/with_reverb/noisy > egs/dns/tt/noisy.json
+python -m denoiser.audio $testset/synthetic/no_reverb/clean $testset/synthetic/with_reverb/clean > egs/dns/tt/clean.json
 ```
 
 ## Online Evaluation
