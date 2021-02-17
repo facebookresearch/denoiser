@@ -305,14 +305,14 @@ mkdir -p egs/val/tr
 mkdir -p egs/val/cv
 mkdir -p egs/val/tt
 
-python -m denoiser.audio $noisy_train egs/val/tr/noisy.json
-python -m denoiser.audio $clean_train egs/val/tr/clean.json
+python -m denoiser.audio $noisy_train > egs/val/tr/noisy.json
+python -m denoiser.audio $clean_train > egs/val/tr/clean.json
 
-python -m denoiser.audio $noisy_test egs/val/tt/noisy.json
-python -m denoiser.audio $clean_test egs/val/tt/clean.json
+python -m denoiser.audio $noisy_test > egs/val/tt/noisy.json
+python -m denoiser.audio $clean_test > egs/val/tt/clean.json
 
-python -m denoiser.audio $noisy_dev egs/val/cv/noisy.json
-python -m denoiser.audio $clean_dev egs/val/cv/clean.json
+python -m denoiser.audio $noisy_dev > egs/val/cv/noisy.json
+python -m denoiser.audio $clean_dev > egs/val/cv/clean.json
 ```
 
 #### DNS dataset
@@ -328,8 +328,8 @@ noisy=path to processed noisy
 clean=path to processed clean
 testset=$dns/datasets/test_set
 mkdir -p egs/dns/tr
-python -m denoiser.audio $noisy egs/dns/tr/noisy.json
-python -m denoiser.audio $clean egs/dns/tr/clean.json
+python -m denoiser.audio $noisy > egs/dns/tr/noisy.json
+python -m denoiser.audio $clean > egs/dns/tr/clean.json
 
 mkdir -p egs/dns/tt
 python -m denoiser.audio $testset/synthetic/no_reverb/noisy $testset/synthetic/with_reverb/noisy > egs/dns/tt/noisy.json
