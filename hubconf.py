@@ -6,4 +6,4 @@
 # author: adefossez
 
 dependencies = ['torch']
-from denoiser.pretrained import demucs_rt48, demucs_rt64  # noqa
+from denoiser.pretrained import dns48, dns64, master64  # noqa
