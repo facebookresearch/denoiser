@@ -56,7 +56,7 @@ def get_model(args):
     """
     if args.model_path:
         logger.info("Loading model from %s", args.model_path)
-        pkg = torch.load(args.model_path)
+        pkg = torch.load(args.model_path, 'cpu')
         if 'model' in pkg:
             if 'best_state' in pkg:
                 pkg['model']['state'] = pkg['best_state']
