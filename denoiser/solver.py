@@ -66,7 +66,7 @@ class Solver(object):
         self.num_prints = args.num_prints  # Number of times to log per epoch
         self.args = args
         self.mrstftloss = MultiResolutionSTFTLoss(factor_sc=args.stft_sc_factor,
-                                                  factor_mag=args.stft_mag_factor)
+                                                  factor_mag=args.stft_mag_factor).to(self.device)
         self._reset()
 
     def _serialize(self):
