@@ -73,6 +73,13 @@ By default, `denoiser` will use the default audio input. You can change that wit
 
 Note that on Windows you will need to replace `python` by `python.exe`.
 
+**On Linux** (tested on Ubuntu 20.04), you can use `pavucontrol`: in the _Recording_ tab, after launching 
+`python -m denoiser.live --out INDEX_OR_NAME_OF_LOOPBACK_IFACE` and the software you want to denoise for (here an in-browser call), you should see both applications:
+<p align="center">
+<img src="./img/pavucontrol.png" alt="pavucontrol window and parameters to use."
+width="50%"></p>
+
+For the latter, you must indicate the *Monitor of ...* interface as source which will output the processed audio stream (delayed by a few ms depending on the parameters you chose).
 
 ### Troubleshooting bad quality in separation
 
