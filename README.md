@@ -73,6 +73,18 @@ By default, `denoiser` will use the default audio input. You can change that wit
 
 Note that on Windows you will need to replace `python` by `python.exe`.
 
+**On Linux** (tested on Ubuntu 20.04), you can use the `pacmd` command and the `pavucontrol` tool:
+- run the following commnds:
+```bash
+pacmd load-module module-null-sink sink_name=denoiser
+pacmd update-sink-proplist denoiser device.description=denoiser
+```
+This will add a `Monitor of Null Output` to the list of microphones to use. Select it as input in your software. 
+- in the _Playback_ tab, after launching 
+`python -m denoiser.live --out INDEX_OR_NAME_OF_LOOPBACK_IFACE` and the software you want to denoise for (here an in-browser call), you should see both applications. For *denoiser* interface as Playback destination which will output the processed audio stream on the sink we previously created.
+<p align="center">
+<img src="./img/pavucontrol.png" alt="pavucontrol window and parameters to use."
+width="50%"></p>
 
 ### Troubleshooting bad quality in separation
 
