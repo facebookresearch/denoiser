@@ -27,3 +27,17 @@ jobs:
       run: |
         ./make_debug.sh
         python train.py num_workers=0 device=cpu epochs=1 dset.test= demucs.hidden=1 demucs.depth=3
+
+    - name: Install with setup.py
+      run: |
+        python -m pip install --upgrade pip
+        pip install -U .
+
+    - name: Demucs benchmark
+      run: |
+        python -m denoiser.demucs
+
+    - name: Dummy training
+      run: |
+        ./make_debug.sh
+        python train.py num_workers=0 device=cpu epochs=1 dset.test= demucs.hidden=1 demucs.depth=3
