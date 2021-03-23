@@ -6,7 +6,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -22,13 +22,21 @@ jobs:
     - name: Demucs benchmark
       run: |
         python -m denoiser.demucs
+  
+    - name: Dummy Training
+      run: |	
+        ./make_debug.sh	
+        python train.py num_workers=0 device=cpu epochs=1 dset.test= demucs.hidden=1 demucs.depth=3	
+        
+  test_setup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
 
-    - name: Dummy training
-      run: |
-        ./make_debug.sh
-        python train.py num_workers=0 device=cpu epochs=1 dset.test= demucs.hidden=1 demucs.depth=3
-
-    - name: Install with setup.py
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -U .
@@ -36,8 +44,9 @@ jobs:
     - name: Demucs benchmark
       run: |
         python -m denoiser.demucs
-
-    - name: Dummy training
-      run: |
-        ./make_debug.sh
-        python train.py num_workers=0 device=cpu epochs=1 dset.test= demucs.hidden=1 demucs.depth=3
+    
+    - name: Dummy Training
+      run: |	
+        ./make_debug.sh	
+        python train.py num_workers=0 device=cpu epochs=1 dset.test= demucs.hidden=1 demucs.depth=3	
+  
