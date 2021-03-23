@@ -46,5 +46,4 @@ jobs:
 
     - name: enhance
       run: python -m denoiser.enhance --dns48 --noisy_dir dataset/debug/noisy/
-        python -m denoiser.demucs
   
