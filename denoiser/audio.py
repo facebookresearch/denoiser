@@ -5,6 +5,7 @@
 # LICENSE file in the root directory of this source tree.
 # author: adefossez
 
+from collections import namedtuple
 import json
 from pathlib import Path
 import math
@@ -13,6 +14,19 @@ import sys
 
 import torchaudio
 from torch.nn import functional as F
+
+
+Info = namedtuple("Info", ["length", "sample_rate", "channels"])
+
+
+def get_info(path):
+    info = torchaudio.info(path)
+    if hasattr(info, 'num_frames'):
+        # new version of torchaudio
+        return Info(info.num_frames, info.sample_rate, info.num_channels)
+    else:
+        siginfo = info[0]
+        return Info(siginfo.length // siginfo.channels, siginfo.rate, siginfo.channels)
 
 
 def find_audio_files(path, exts=[".wav"], progress=True):
@@ -24,9 +38,8 @@ def find_audio_files(path, exts=[".wav"], progress=True):
                 audio_files.append(str(file.resolve()))
     meta = []
     for idx, file in enumerate(audio_files):
-        siginfo, _ = torchaudio.info(file)
-        length = siginfo.length // siginfo.channels
-        meta.append((file, length))
+        info = get_info(file)
+        meta.append((file, info.length))
         if progress:
             print(format((1 + idx) / len(audio_files), " 3.1%"), end='\r', file=sys.stderr)
     meta.sort()
@@ -69,7 +82,12 @@ class Audioset:
             if self.length is not None:
                 offset = self.stride * index
                 num_frames = self.length
-            out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
+            if torchaudio.get_audio_backend() in ['soundfile', 'sox_io']:
+                out, sr = torchaudio.load(str(file),
+                                          frame_offset=offset,
+                                          num_frames=num_frames or -1)
+            else:
+                out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
             if self.sample_rate is not None:
                 if sr != self.sample_rate:
                     raise RuntimeError(f"Expected {file} to have sample rate of "
