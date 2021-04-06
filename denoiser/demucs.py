@@ -306,8 +306,9 @@ class DemucsStreamer:
                 variance = (mono**2).mean()
                 self.variance = variance / self.frames + (1 - 1 / self.frames) * self.variance
                 frame = frame / (demucs.floor + math.sqrt(self.variance))
-            frame = th.cat([self.resample_in, frame], dim=-1)
+            padded_frame = th.cat([self.resample_in, frame], dim=-1)
             self.resample_in[:] = frame[:, stride - resample_buffer:stride]
+            frame = padded_frame
 
             if resample == 4:
                 frame = upsample2(upsample2(frame))
