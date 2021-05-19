@@ -17,6 +17,7 @@ ROOT = "https://dl.fbaipublicfiles.com/adiyoss/denoiser/"
 DNS_48_URL = ROOT + "dns48-11decc9d8e3f0998.th"
 DNS_64_URL = ROOT + "dns64-a7761ff99a7d5bb6.th"
 MASTER_64_URL = ROOT + "master64-8a5dfb4bb92753dd.th"
+VALENTINI_NC = ROOT + 'valentini_nc-93fc4337.th'  # Non causal Demucs on Valentini
 
 
 def _demucs(pretrained, url, **kwargs):
@@ -39,6 +40,10 @@ def master64(pretrained=True):
     return _demucs(pretrained, MASTER_64_URL, hidden=64)
 
 
+def valentini_nc(pretrained=True):
+    return _demucs(pretrained, VALENTINI_NC, hidden=64, causal=False, stride=2, resample=2)
+
+
 def add_model_flags(parser):
     group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument("-m", "--model_path", help="Path to local trained model.")
@@ -48,6 +53,8 @@ def add_model_flags(parser):
                        help="Use pre-trained real time H=64 model trained on DNS.")
     group.add_argument("--master64", action="store_true",
                        help="Use pre-trained real time H=64 model trained on DNS and Valentini.")
+    group.add_argument("--valentini_nc", action="store_true",
+                       help="Use pre-trained H=64 model trained on Valentini, non causal.")
 
 
 def get_model(args):
@@ -69,6 +76,9 @@ def get_model(args):
     elif args.master64:
         logger.info("Loading pre-trained real time H=64 model trained on DNS and Valentini.")
         model = master64()
+    elif args.valentini_nc:
+        logger.info("Loading pre-trained H=64 model trained on Valentini.")
+        model = valentini_nc()
     else:
         logger.info("Loading pre-trained real time H=48 model trained on DNS.")
         model = dns48()

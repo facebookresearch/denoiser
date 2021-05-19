@@ -22,7 +22,7 @@ URL = 'https://github.com/facebookresearch/denoiser'
 EMAIL = 'alexandre.defossez@gmail.com'
 AUTHOR = 'Alexandre Défossez'
 REQUIRES_PYTHON = '>=3.7.0'
-VERSION = "0.1.4"
+VERSION = "0.1.5"
 
 HERE = Path(__file__).parent
 
