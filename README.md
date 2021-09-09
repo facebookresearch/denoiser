@@ -306,7 +306,7 @@ Here we provide a detailed description of how to reproduce the results from the 
 1. Download [Valentini dataset][valentini].
 2. Adapt the Valentini config file and run the processing script.
 3. Generate the egs/ files as explained here after.
-4. Launch the training using the `launch_valentini.sh` script.
+4. Launch the training using the `launch_valentini.sh` (or `launch_valentini_nc.sh` for non causal) script.
 
 To create the egs/ file, adapt and run the following code
 ```bash

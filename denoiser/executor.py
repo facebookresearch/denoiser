@@ -8,6 +8,7 @@
 Start multiple process locally for DDP.
 """
 
+from pathlib import Path
 import logging
 import subprocess as sp
 import sys
@@ -54,8 +55,12 @@ class ChildrenManager:
             logger.info("All workers completed successfully")
 
 
-def start_ddp_workers():
+def start_ddp_workers(cfg):
     import torch as th
+    log = utils.HydraConfig().hydra.job_logging.handlers.file.filename
+    rendezvous_file = Path(cfg.rendezvous_file)
+    if rendezvous_file.exists():
+        rendezvous_file.unlink()
 
     world_size = th.cuda.device_count()
     if not world_size:
@@ -72,7 +77,6 @@ def start_ddp_workers():
                 kwargs['stdin'] = sp.DEVNULL
                 kwargs['stdout'] = sp.DEVNULL
                 kwargs['stderr'] = sp.DEVNULL
-                log = utils.HydraConfig().hydra.job_logging.handlers.file.filename
                 log += f".{rank}"
                 argv.append("hydra.job_logging.handlers.file.filename=" + log)
             manager.add(sp.Popen([sys.executable] + argv, cwd=utils.get_original_cwd(), **kwargs))

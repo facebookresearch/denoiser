@@ -7,15 +7,17 @@
 # authors: adiyoss and adefossez
 
 python train.py \
-  dset=dns \
-  demucs.causal=1 \
+  dset=valentini \
+  demucs.causal=0 \
   demucs.hidden=64 \
-  demucs.resample=4 \
-  batch_size=128 \
-  revecho=1 \
-  segment=10 \
-  stride=2 \
-  shift=16000 \
+  demucs.stride=2 \
+  bandmask=0.2 \
+  demucs.resample=2 \
+  remix=1 \
+  shift=8000 \
   shift_same=True \
-  epochs=250 \
+  stft_loss=True \
+  segment=4.5 \
+  stride=0.5 \
   ddp=1
+
