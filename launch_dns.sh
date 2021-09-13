@@ -18,4 +18,4 @@ python train.py \
   shift=16000 \
   shift_same=True \
   epochs=250 \
-  ddp=1
+  ddp=1 $@

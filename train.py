@@ -25,6 +25,9 @@ def run(args):
     from denoiser.solver import Solver
     distrib.init(args)
 
+    # torch also initialize cuda seed if available
+    torch.manual_seed(args.seed)
+
     model = Demucs(**args.demucs)
 
     if args.show:
@@ -62,8 +65,6 @@ def run(args):
         tt_loader = None
     data = {"tr_loader": tr_loader, "cv_loader": cv_loader, "tt_loader": tt_loader}
 
-    # torch also initialize cuda seed if available
-    torch.manual_seed(args.seed)
     if torch.cuda.is_available():
         model.cuda()
 

@@ -19,5 +19,5 @@ python train.py \
   stft_loss=True \
   segment=4.5 \
   stride=0.5 \
-  ddp=1
+  ddp=1 $@
 
