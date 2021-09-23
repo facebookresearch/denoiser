@@ -308,6 +308,10 @@ Here we provide a detailed description of how to reproduce the results from the 
 3. Generate the egs/ files as explained here after.
 4. Launch the training using the `launch_valentini.sh` (or `launch_valentini_nc.sh` for non causal) script.
 
+
+**Important:** unlike what we stated in the paper, the causal models were trained with a weight of 0.1
+for the STFT loss, not 0.5.
+
 To create the egs/ file, adapt and run the following code
 ```bash
 noisy_train=path to valentini
