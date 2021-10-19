@@ -336,8 +336,8 @@ python -m denoiser.audio $clean_dev > egs/val/cv/clean.json
 ```
 
 #### DNS dataset
-1. Download both [DNS dataset][dns].
-2. Adapt the DNS config file and run the processing script.
+1. Download both [DNS dataset][dns], be sure to use the interspeech2020 branch.
+2. Setup the paths in the DNS config file to suit your setup and run the processing script.
 3. Generate the egs/ files as explained here after.
 4. Launch the training using the `launch_dns.sh` script.
 
@@ -401,7 +401,7 @@ The file `scripts/matlab_eval.py` was adapted from the [santi-pdp/segan_pytorch]
 [web]: https://facebookresearch.github.io/denoiser/
 [pytorch]: https://pytorch.org/
 [valentini]: https://datashare.is.ed.ac.uk/handle/10283/2791
-[dns]: https://github.com/microsoft/DNS-Challenge
+[dns]:https://github.com/microsoft/DNS-Challenge/blob/interspeech2020/master/
 [hydra]: https://github.com/facebookresearch/hydra
 [hydra-web]: https://hydra.cc/
 [soundflower]: https://github.com/mattingalls/Soundflower
