@@ -10,6 +10,9 @@ import logging
 from contextlib import contextmanager
 import inspect
 import time
+import sys
+
+import torch
 
 logger = logging.getLogger(__name__)
 
@@ -33,8 +36,14 @@ def deserialize_model(package, strict=False):
 
     """
     klass = package['class']
+    kwargs = package['kwargs']
+    if 'sample_rate' not in kwargs:
+        logger.warning(
+            "Training sample rate not available!, 16kHz will be assumed. "
+            "If you used a different sample rate at train time, please fix your checkpoint "
+            "with the command `./train.py [TRAINING_ARGS] save_again=true.")
     if strict:
-        model = klass(*package['args'], **package['kwargs'])
+        model = klass(*package['args'], **kwargs)
     else:
         sig = inspect.signature(klass)
         kw = package['kwargs']

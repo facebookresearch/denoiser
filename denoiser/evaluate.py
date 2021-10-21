@@ -47,7 +47,8 @@ def evaluate(args, model=None, data_loader=None):
 
     # Load data
     if data_loader is None:
-        dataset = NoisyCleanSet(args.data_dir, matching=args.matching, sample_rate=args.sample_rate)
+        dataset = NoisyCleanSet(args.data_dir,
+                                matching=args.matching, sample_rate=model.sample_rate)
         data_loader = distrib.loader(dataset, batch_size=1, num_workers=2)
     pendings = []
     with ProcessPoolExecutor(args.num_workers) as pool:
@@ -81,17 +82,17 @@ def evaluate(args, model=None, data_loader=None):
 
 def _estimate_and_run_metrics(clean, model, noisy, args):
     estimate = get_estimate(model, noisy, args)
-    return _run_metrics(clean, estimate, args)
+    return _run_metrics(clean, estimate, args, sr=model.sample_rate)
 
 
-def _run_metrics(clean, estimate, args):
+def _run_metrics(clean, estimate, args, sr):
     estimate = estimate.numpy()[:, 0]
     clean = clean.numpy()[:, 0]
     if args.pesq:
-        pesq_i = get_pesq(clean, estimate, sr=args.sample_rate)
+        pesq_i = get_pesq(clean, estimate, sr=sr)
     else:
         pesq_i = 0
-    stoi_i = get_stoi(clean, estimate, sr=args.sample_rate)
+    stoi_i = get_stoi(clean, estimate, sr=sr)
     return pesq_i, stoi_i
 
 

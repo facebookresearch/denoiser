@@ -21,7 +21,7 @@ VALENTINI_NC = ROOT + 'valentini_nc-93fc4337.th'  # Non causal Demucs on Valenti
 
 
 def _demucs(pretrained, url, **kwargs):
-    model = Demucs(**kwargs)
+    model = Demucs(**kwargs, sample_rate=16_000)
     if pretrained:
         state_dict = torch.hub.load_state_dict_from_url(url, map_location='cpu')
         model.load_state_dict(state_dict)

@@ -225,7 +225,6 @@ For more details regarding possible arguments, please see:
 ```
 usage: denoiser.evaluate [-h] [-m MODEL_PATH | --dns48 | --dns64 | --master64]
                          [--device DEVICE] [--dry DRY]
-                         [--sample_rate SAMPLE_RATE]
                          [--num_workers NUM_WORKERS] [--streaming]
                          [--data_dir DATA_DIR] [--matching MATCHING]
                          [--no_pesq] [-v]
@@ -243,8 +242,6 @@ optional arguments:
   --device DEVICE
   --dry DRY             dry/wet knob coefficient. 0 is only input signal, 1
                         only denoised.
-  --sample_rate SAMPLE_RATE
-                        sample rate
   --num_workers NUM_WORKERS
   --streaming           true streaming evaluation for Demucs
   --data_dir DATA_DIR   directory including noisy.json and clean.json files
@@ -267,7 +264,6 @@ It is also possible to use pre-trained model, using either `--dns48`, `--dns64`o
 ```
 usage: denoiser.enhance [-h] [-m MODEL_PATH | --dns48 | --dns64 | --master64]
                         [--device DEVICE] [--dry DRY]
-                        [--sample_rate SAMPLE_RATE]
                         [--num_workers NUM_WORKERS] [--streaming]
                         [--out_dir OUT_DIR] [--batch_size BATCH_SIZE] [-v]
                         [--noisy_dir NOISY_DIR | --noisy_json NOISY_JSON]
@@ -285,8 +281,6 @@ optional arguments:
   --device DEVICE
   --dry DRY             dry/wet knob coefficient. 0 is only input signal, 1
                         only denoised.
-  --sample_rate SAMPLE_RATE
-                        sample rate
   --num_workers NUM_WORKERS
   --streaming           true streaming evaluation for Demucs
   --out_dir OUT_DIR     directory putting enhanced wav files

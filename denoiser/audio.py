@@ -15,6 +15,7 @@ import sys
 import torchaudio
 from torch.nn import functional as F
 
+from .dsp import convert_audio
 
 Info = namedtuple("Info", ["length", "sample_rate", "channels"])
 
@@ -48,7 +49,8 @@ def find_audio_files(path, exts=[".wav"], progress=True):
 
 class Audioset:
     def __init__(self, files=None, length=None, stride=None,
-                 pad=True, with_path=False, sample_rate=None):
+                 pad=True, with_path=False, sample_rate=None,
+                 channels=None, convert=False):
         """
         files should be a list [(file, length)]
         """
@@ -58,6 +60,8 @@ class Audioset:
         self.stride = stride or length
         self.with_path = with_path
         self.sample_rate = sample_rate
+        self.channels = channels
+        self.convert = convert
         for file, file_length in self.files:
             if length is None:
                 examples = 1
@@ -88,10 +92,17 @@ class Audioset:
                                           num_frames=num_frames or -1)
             else:
                 out, sr = torchaudio.load(str(file), offset=offset, num_frames=num_frames)
-            if self.sample_rate is not None:
-                if sr != self.sample_rate:
+            target_sr = self.sample_rate or sr
+            target_channels = self.channels or out.shape[0]
+            if self.convert:
+                out = convert_audio(out, sr, target_sr, target_channels)
+            else:
+                if sr != target_sr:
                     raise RuntimeError(f"Expected {file} to have sample rate of "
-                                       f"{self.sample_rate}, but got {sr}")
+                                       f"{target_sr}, but got {sr}")
+                if out.shape[0] != target_channels:
+                    raise RuntimeError(f"Expected {file} to have sample rate of "
+                                       f"{target_channels}, but got {sr}")
             if num_frames:
                 out = F.pad(out, (0, num_frames - out.shape[-1]))
             if self.with_path:

@@ -35,6 +35,7 @@ checkpoint_file: checkpoint.th
 best_file: best.th  # will contain only best model at any point
 history_file: history.json
 samples_dir: samples
+save_again: false  # if true, only load checkpoint and save again, useful to reexport best.th
 
 # Other stuff
 seed: 2036
@@ -100,7 +101,7 @@ hydra:
         exclude_keys: [
           'hydra.job_logging.handles.file.filename',
           'dset.train', 'dset.valid', 'dset.test', 'dset.noisy_json', 'dset.noisy_dir',
-          'num_prints', 'continue_from',
+          'num_prints', 'continue_from', 'save_again',
           'device', 'num_workers', 'print_freq', 'restart', 'verbose',
           'log', 'ddp', 'ddp_backend', 'rendezvous_file', 'rank', 'world_size']
   job_logging:

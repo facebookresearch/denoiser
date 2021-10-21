@@ -121,6 +121,9 @@ class Solver(object):
             self.model.load_state_dict(model.state_dict())
 
     def train(self):
+        if self.args.save_again:
+            self._serialize()
+            return
         # Optimizing the model
         if self.history:
             logger.info("Replaying metrics from previous run")

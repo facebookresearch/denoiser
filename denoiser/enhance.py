@@ -32,7 +32,6 @@ def add_flags(parser):
     parser.add_argument('--device', default="cpu")
     parser.add_argument('--dry', type=float, default=0,
                         help='dry/wet knob coefficient. 0 is only input signal, 1 only denoised.')
-    parser.add_argument('--sample_rate', default=16_000, type=int, help='sample rate')
     parser.add_argument('--num_workers', type=int, default=10)
     parser.add_argument('--streaming', action="store_true",
                         help="true streaming evaluation for Demucs")
@@ -84,7 +83,7 @@ def write(wav, filename, sr=16_000):
     torchaudio.save(filename, wav.cpu(), sr)
 
 
-def get_dataset(args):
+def get_dataset(args, sample_rate, channels):
     if hasattr(args, 'dset'):
         paths = args.dset
     else:
@@ -99,12 +98,13 @@ def get_dataset(args):
             "Small sample set was not provided by either noisy_dir or noisy_json. "
             "Skipping enhancement.")
         return None
-    return Audioset(files, with_path=True, sample_rate=args.sample_rate)
+    return Audioset(files, with_path=True,
+                    sample_rate=sample_rate, channels=channels, convert=True)
 
 
 def _estimate_and_save(model, noisy_signals, filenames, out_dir, args):
     estimate = get_estimate(model, noisy_signals, args)
-    save_wavs(estimate, noisy_signals, filenames, out_dir, sr=args.sample_rate)
+    save_wavs(estimate, noisy_signals, filenames, out_dir, sr=model.sample_rate)
 
 
 def enhance(args, model=None, local_out_dir=None):
@@ -117,7 +117,7 @@ def enhance(args, model=None, local_out_dir=None):
     else:
         out_dir = args.out_dir
 
-    dset = get_dataset(args)
+    dset = get_dataset(args, model.sample_rate, model.chin)
     if dset is None:
         return
     loader = distrib.loader(dset, batch_size=1)
@@ -140,7 +140,7 @@ def enhance(args, model=None, local_out_dir=None):
             else:
                 # Forward
                 estimate = get_estimate(model, noisy_signals, args)
-                save_wavs(estimate, noisy_signals, filenames, out_dir, sr=args.sample_rate)
+                save_wavs(estimate, noisy_signals, filenames, out_dir, sr=model.sample_rate)
 
         if pendings:
             print('Waiting for pending jobs...')

@@ -28,7 +28,7 @@ def run(args):
     # torch also initialize cuda seed if available
     torch.manual_seed(args.seed)
 
-    model = Demucs(**args.demucs)
+    model = Demucs(**args.demucs, sample_rate=args.sample_rate)
 
     if args.show:
         logger.info(model)

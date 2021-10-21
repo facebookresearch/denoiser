@@ -67,6 +67,7 @@ class Demucs(nn.Module):
         - rescale (float): controls custom weight initialization.
             See https://arxiv.org/abs/1911.13254.
         - floor (float): stability flooring when normalizing.
+        - sample_rate (float): sample_rate used for training the model.
 
     """
     @capture_init
@@ -84,7 +85,8 @@ class Demucs(nn.Module):
                  normalize=True,
                  glu=True,
                  rescale=0.1,
-                 floor=1e-3):
+                 floor=1e-3,
+                 sample_rate=16_000):
 
         super().__init__()
         if resample not in [1, 2, 4]:
@@ -100,6 +102,7 @@ class Demucs(nn.Module):
         self.floor = floor
         self.resample = resample
         self.normalize = normalize
+        self.sample_rate = sample_rate
 
         self.encoder = nn.ModuleList()
         self.decoder = nn.ModuleList()
