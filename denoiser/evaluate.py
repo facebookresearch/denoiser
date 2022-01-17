@@ -66,7 +66,7 @@ def evaluate(args, model=None, data_loader=None):
                     estimate = estimate.cpu()
                     clean = clean.cpu()
                     pendings.append(
-                        pool.submit(_run_metrics, clean, estimate, args))
+                        pool.submit(_run_metrics, clean, estimate, args, model.sample_rate))
                 total_cnt += clean.shape[0]
 
         for pending in LogProgress(logger, pendings, updates, name="Eval metrics"):
