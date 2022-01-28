@@ -31,7 +31,7 @@ def add_flags(parser):
     pretrained.add_model_flags(parser)
     parser.add_argument('--device', default="cpu")
     parser.add_argument('--dry', type=float, default=0,
-                        help='dry/wet knob coefficient. 0 is only input signal, 1 only denoised.')
+                        help='dry/wet knob coefficient. 0 is only denoised, 1 only input signal.')
     parser.add_argument('--num_workers', type=int, default=10)
     parser.add_argument('--streaming', action="store_true",
                         help="true streaming evaluation for Demucs")
