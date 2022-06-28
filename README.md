@@ -18,6 +18,10 @@ width="50%"></p>
 
 The proposed model is based on the Demucs architecture, originally proposed for music source-separation: ([Paper][demucs-ppr], [Code][demucs-code]).
 
+## Colab
+
+If you want to play with the pretrained model inside colab for instance, start from this [Colab Example for Denoiser](https://colab.research.google.com/drive/1Too3cnMpyKaLQ0vPwDw7jUx0Y3eXm2IA?usp=sharing).
+
 ## Installation
 
 First, install Python 3.7 (recommended with Anaconda).
