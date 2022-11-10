@@ -273,8 +273,9 @@ class DemucsStreamer:
 
     def flush(self):
         """
-        Flush remaining audio by padding it with zero. Call this
-        when you have no more input and want to get back the last chunk of audio.
+        Flush remaining audio by padding it with zero and initialize the previous
+        status. Call this when you have no more input and want to get back the last
+        chunk of audio.
         """
         pending_length = self.pending.shape[1]
         padding = th.zeros(self.demucs.chin, self.total_length, device=self.pending.device)
