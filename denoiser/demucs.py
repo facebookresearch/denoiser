@@ -279,7 +279,7 @@ class DemucsStreamer:
         pending_length = self.pending.shape[1]
         padding = th.zeros(self.demucs.chin, self.total_length, device=self.pending.device)
         out = self.feed(padding)
-        self.
+        self.conv_state = None
         return out[:, :pending_length]
 
     def feed(self, wav):
