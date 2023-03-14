@@ -283,7 +283,7 @@ optional arguments:
   --master64            Use pre-trained real time H=64 model trained on DNS
                         and Valentini.
   --device DEVICE
-  --dry DRY             dry/wet knob coefficient. 0 is only input signal, 1
+  --dry DRY             dry/wet knob coefficient. 1 is only input signal, 0
                         only denoised.
   --num_workers NUM_WORKERS
   --streaming           true streaming evaluation for Demucs
